@@ -31,7 +31,7 @@ public class Main_6_2 {
             //////////////////////////////////
             cumul=cumul+num;
             cumulative=cumulative+"    "+cumul;
-            /////////////////////////////////
+            //////////////////////////////////
         }
         System.out.println(cumulative);
         System.out.println("the bigest number:"+max+"\n"+"the smallest number:"+min);
