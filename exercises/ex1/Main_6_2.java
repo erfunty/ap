@@ -9,6 +9,8 @@ public class Main_6_2 {
         int max=0;
         int odd=0;
         int even=0;
+        int cumul=0;
+        String cumulative=new String();
         System.out.print("enter a number:");
         while(in.hasNextInt()){
             System.out.print("enter a number:");
@@ -27,8 +29,11 @@ public class Main_6_2 {
                 odd++;
             }
             //////////////////////////////////
+            cumul=cumul+num;
+            cumulative=cumulative+"    "+cumul;
+            /////////////////////////////////
         }
-
+        System.out.println(cumulative);
         System.out.println("the bigest number:"+max+"\n"+"the smallest number:"+min);
         System.out.println("number of odd:"+odd+"\n"+"number of even:"+even);
     }
