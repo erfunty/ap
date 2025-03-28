@@ -23,6 +23,17 @@ public class Main_6_3 {
         /// ////////////////////////
         System.out.println("\n");
         System.out.println(str.replaceAll("[AEIOUaeiou]", "_"));
+
+        /// ///////////
+        int vowels=0;
+        for (char c:str.toCharArray()){
+             if ("AEIOUaeiou".indexOf(c) != -1) {
+                vowels++;
+            }
+        }
+        System.out.println(vowels);
+
+
     }
 
 
