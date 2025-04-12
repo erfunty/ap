@@ -168,6 +168,7 @@ public class Main_EX2_PM_2_3 {
                         break;
                     case 'q':
                         System.out.println("Game Over!");
+                        pacmanEngine2.save();
                 }
             }else {
                 choise = 'z';
