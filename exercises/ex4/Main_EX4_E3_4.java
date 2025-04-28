@@ -20,23 +20,13 @@ class Circuit{
         return lampState;
     } // 0 for off, 1 for on
     public void toggleFirstSwitch(){
-        if(lampState==0) {
-            firstSwitchState--;
-            lampState++;
-        } else {
-            firstSwitchState++;
-            lampState--;
-        }
+        firstSwitchState = 1 - firstSwitchState;
+        lampState = 1 - lampState;
 
     }
     public void toggleSecondSwitch(){
-        if(lampState==0) {
-            secondSwitchState--;
-            lampState++;
-        } else {
-            secondSwitchState++;
-            lampState--;
-        }
+        secondSwitchState = 1 - secondSwitchState;
+        lampState = 1 - lampState;
     }
     public void showLampState(){
         if(getLampState()==0){
