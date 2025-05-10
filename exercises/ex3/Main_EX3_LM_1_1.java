@@ -34,30 +34,30 @@ class Student {
     private String firstName;
     private String lastName;
     private String studentNumber;
-    private String major;
+    private String Field_of_study;
 
-    public Student(String firstName, String lastName, String studentNumber, String major) {
+    public Student(String firstName, String lastName, String studentNumber, String Field_of_study) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.studentNumber = studentNumber;
-        this.major = major;
+        this.Field_of_study = Field_of_study;
     }
 
 
     public String getFirstName() { return firstName; }
     public String getLastName() { return lastName; }
     public String getStudentNumber() { return studentNumber; }
-    public String getMajor() { return major; }
+    public String getField_of_study() { return Field_of_study; }
 
 
     public void setFirstName(String firstName) { this.firstName = firstName; }
     public void setLastName(String lastName) { this.lastName = lastName; }
     public void setStudentNumber(String studentNumber) { this.studentNumber = studentNumber; }
-    public void setMajor(String major) { this.major = major; }
+    public void setField_of_study(String Field_of_study) { this.Field_of_study = Field_of_study; }
 
     public void printInfo() {
         System.out.println("Student: " + firstName + " " + lastName +
-                ", ID: " + studentNumber + ", Major: " + major);
+                ", ID: " + studentNumber + ", Field of study: " + Field_of_study);
     }
 }
 public class Main_EX3_LM_1_1 {
