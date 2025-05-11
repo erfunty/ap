@@ -77,16 +77,29 @@ public class Main_EX3_LM_1_2 {
         students.add(new Student1("Ali", "Ahmadi", "98123456", "Computer Engineering"));
         students.add( new Student1("Sara", "Hosseini", "99112233", "Software Engineering"));
         students.add(new Student1("amir","mohammadi","99536944","bargh"));
-        PrintWriter writerst=new PrintWriter("students.txt");
-        for (Student1 st:students){
-            writerst.println(st.getFirstName()+","+st.getLastName()+","+st.getStudentNumber()+","+st.getField_of_study());
+
+        saveBook(books);
+        saveStudent(students);
+        readstudent();
+        readBook();
+
+
+    }
+    public static void saveStudent(ArrayList<Student1>students) throws FileNotFoundException {
+        PrintWriter writerst = new PrintWriter("students.txt");
+        for (Student1 st : students) {
+            writerst.println(st.getFirstName() + "," + st.getLastName() + "," + st.getStudentNumber() + "," + st.getField_of_study());
         }
         writerst.close();
+    }
+    public static void saveBook(ArrayList<Book1> books) throws FileNotFoundException {
         PrintWriter writerb=new PrintWriter("books.txt");
         for (Book1 b:books){
             writerb.println(b.getTitle()+","+b.getAuthor()+","+b.getPageCount()+","+b.getPublishYear());
         }
         writerb.close();
+    }
+    public static void readstudent() throws FileNotFoundException {
         Scanner readst=new Scanner(new File("students.txt"));
         ArrayList<Student1> studentList=new ArrayList<>();
         while (readst.hasNextLine()) {
@@ -96,6 +109,9 @@ public class Main_EX3_LM_1_2 {
         for (Student1 stu: studentList) {
             stu.printInfo();
         }
+
+    }
+    public static void  readBook() throws FileNotFoundException {
         Scanner readb=new Scanner(new File("books.txt"));
         ArrayList<Book1> bookList=new ArrayList<>();
         while (readb.hasNextLine()) {
@@ -105,7 +121,6 @@ public class Main_EX3_LM_1_2 {
         for (Book1 b : bookList) {
             b.printInfo();
         }
-
     }
 
 }
