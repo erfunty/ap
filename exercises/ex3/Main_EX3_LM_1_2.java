@@ -1,8 +1,10 @@
 package exercises.ex3;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 class Book1 {
     private String title;
@@ -85,6 +87,24 @@ public class Main_EX3_LM_1_2 {
             writerb.println(b.getTitle()+","+b.getAuthor()+","+b.getPageCount()+","+b.getPublishYear());
         }
         writerb.close();
+        Scanner readst=new Scanner(new File("students.txt"));
+        ArrayList<Student1> studentList=new ArrayList<>();
+        while (readst.hasNextLine()) {
+            String[] st = readst.nextLine().split(",");
+            studentList.add(new Student1(st[0],st[1],st[2],st[3] ));
+        }
+        for (Student1 stu: studentList) {
+            stu.printInfo();
+        }
+        Scanner readb=new Scanner(new File("books.txt"));
+        ArrayList<Book1> bookList=new ArrayList<>();
+        while (readb.hasNextLine()) {
+            String[] bo = readb.nextLine().split(",");
+            bookList.add(new Book1(bo[0],bo[1],Integer.parseInt(bo[2]),Integer.parseInt(bo[3])));
+        }
+        for (Book1 b : bookList) {
+            b.printInfo();
+        }
 
     }
 
