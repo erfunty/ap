@@ -1,25 +1,24 @@
 package Midterm;
 
-public class Librarian {
+public class Manager {
     private String firstName;
     private String lastName;
-    private String employeeID;
+    private String educationLevel;
 
-    public Librarian(String firstName,String lastName,String employeeID){
+    public Manager(String firstName,String lastName,String educationLevel){
         this.firstName=firstName;
         this.lastName=lastName;
-        this.employeeID=employeeID;
+        this.educationLevel=educationLevel;
     }
     public String getFirstName(){return firstName;}
     public String getLastName(){return lastName;}
-    public String getEmployeeID(){return employeeID;}
+    public String geteducationLevel(){return educationLevel;}
 
     public void setFirstName(String firstName) { this.firstName = firstName; }
     public void setLastName(String lastName) { this.lastName = lastName; }
-    public void setemployeeID(String employeeID) { this.employeeID= employeeID; }
+    public void seteducationLevel(String educationLevel) { this.educationLevel= educationLevel; }
     public void printInfo() {
         System.out.println("first name: " + firstName + ", last name: " + lastName +
-                ", employee ID: "+employeeID);
+                ", educationLevel: " + educationLevel);
     }
-
 }
