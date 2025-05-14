@@ -18,7 +18,30 @@ public class Library {
     public String getName(){return name;}
     public void studentRegistration(){
         studentList.add(inputLibrary.gettingStudentInformation());
-        System.out.println("You have registered ");
+        System.out.println("You have registered successfully");
+    }
+    public void searchingBook(){
+        for (Book book : bookList) {
+            if (book.getTitle()==inputLibrary.gettingBookName()){
+                book.printInfo();
+            }
+        }
+    }
+    public void addLibrarian(){
+        librarianList.add(inputLibrary.gettingLibrarianInformation());
+    }
+    public void editingInformationLibrarian(){
+        for (Librarian librarian : librarianList) {
+            if (librarian.getEmployeeID().equals(inputLibrary.gettingEmployeeID())){
+                int indexl=librarianList.indexOf(librarian);
+                librarianList.set(indexl,inputLibrary.gettingInformationLibrarian());
+            }
+        }
+
+    }
+    public void addBook(){
+        bookList.add(inputLibrary.gettingBookInformation());
+        System.out.println("Book added successfully.");
     }
 
 

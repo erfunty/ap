@@ -12,6 +12,9 @@ public class Book {
         this.pageCount = pageCount;
         this.publishYear = publishYear;
     }
+    public Book(){
+
+    }
 
 
     public String getTitle() { return title; }

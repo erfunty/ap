@@ -21,5 +21,50 @@ public class InputProcessing {
         student.setRegistrationTime();
         return student;
     }
+    public String gettingBookName(){
+        return in.nextLine();
+    }
+    public Librarian gettingLibrarianInformation(){
+        Librarian librarian=new Librarian();
+        System.out.println("ADDING LIBRARIAN");
+        System.out.print("enter first name:");
+        librarian.setFirstName(in.nextLine());
+        System.out.print("enter last name:");
+        librarian.setLastName(in.nextLine());
+        System.out.print("enter employee ID:");
+        librarian.setemployeeID(in.nextLine());
+
+        return librarian;
+    }
+    public String gettingEmployeeID(){
+        String employeeID;
+        System.out.println("enter your employeeID:");
+        employeeID=in.nextLine();
+
+        return employeeID;
+    }
+    public Librarian gettingInformationLibrarian(){
+        Librarian librarian=new Librarian();
+        System.out.println("editing your information");
+        System.out.print("enter first name:");
+        librarian.setFirstName(in.nextLine());
+        System.out.print("enter last name:");
+        librarian.setLastName(in.nextLine());
+        System.out.print("enter employee ID:");
+        librarian.setemployeeID(in.nextLine());
+        return librarian;
+    }
+    public Book gettingBookInformation(){
+        Book book=new Book();
+        System.out.println("enter book title:");
+        book.setTitle(in.nextLine());
+        System.out.println("enter book author name:");
+        book.setAuthor(in.nextLine());
+        System.out.println("enter the year of publication of the book:");
+        book.setPublishYear(in.nextInt());
+        System.out.println("enter number of pages in the book:");
+        book.setPageCount(in.nextInt());
+        return book;
+    }
 
 }
