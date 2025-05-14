@@ -34,6 +34,7 @@ public class Student {
         Registime=LocalDate.now();
     }
 
+
     public void printInfo() {
         System.out.println("Student: " + firstName + " " + lastName +
                 ", ID: " + studentNumber + ", academic level: " + academicLevel+", Registration time:"+Registime);

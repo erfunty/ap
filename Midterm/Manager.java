@@ -10,6 +10,7 @@ public class Manager {
         this.lastName=lastName;
         this.educationLevel=educationLevel;
     }
+
     public String getFirstName(){return firstName;}
     public String getLastName(){return lastName;}
     public String geteducationLevel(){return educationLevel;}
