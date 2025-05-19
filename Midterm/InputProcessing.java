@@ -36,23 +36,15 @@ public class InputProcessing {
 
         return librarian;
     }
-    public String gettingEmployeeID(){
-        String employeeID;
-        System.out.println("enter your employeeID:");
-        employeeID=in.nextLine();
 
-        return employeeID;
-    }
-
-    public Librarian gettingInformationLibrarian(){
+    public Librarian gettingInformationLibrarian(String ID){
         Librarian librarian=new Librarian();
         System.out.println("editing your information");
         System.out.print("enter first name:");
         librarian.setFirstName(in.nextLine());
         System.out.print("enter last name:");
         librarian.setLastName(in.nextLine());
-        System.out.print("enter employee ID:");
-        librarian.setemployeeID(in.nextLine());
+        librarian.setemployeeID(ID);
         return librarian;
     }
     public Book gettingBookInformation(){
@@ -66,6 +58,17 @@ public class InputProcessing {
         System.out.println("enter number of pages in the book:");
         book.setPageCount(in.nextInt());
         return book;
+    }
+    public String getStudentID(){
+        return in.nextLine();
+    }
+    public String getBookTitle(){
+        System.out.println("enter book name:");
+        String bookTitle=in.nextLine();
+        return bookTitle;
+    }
+    public String getEmployeetID(){
+        return in.nextLine();
     }
 
 }
