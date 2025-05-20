@@ -1,9 +1,10 @@
 package Midterm;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class InputProcessing {
-    private Scanner in=new Scanner(System.in);
+public class InputProcessing implements Serializable{
+    private transient Scanner in=new Scanner(System.in);
     public String gettingInput(){
         return in.nextLine();
     }

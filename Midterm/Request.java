@@ -1,9 +1,11 @@
 package Midterm;
 
-public class Request {
+import java.io.Serializable;
+
+public class Request implements Serializable {
     private Book bookrequested;
     private Student studentrequest;
-    private boolean requeststatus;
+    private Boolean requeststatus;
     public Request(Book book,Student student){
     this.bookrequested=book;
     this.studentrequest=student;
@@ -14,11 +16,23 @@ public class Request {
     public Student getStudentrequest(){
         return studentrequest;
     }
+    public Boolean getRequeststatus(){
+        return requeststatus;
+    }
     public void setRequeststatusTrue(){
         requeststatus=true;
     }
     public void setRequeststatusFalse(){
         requeststatus=false;
+    }
+    public void printStatus(){
+        if (requeststatus == null) {
+            System.out.println("Not checked.");
+        } else if (requeststatus) {
+            System.out.println("accepted.");
+        } else {
+            System.out.println("rejected.");
+        }
     }
 
 

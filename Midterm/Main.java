@@ -2,10 +2,11 @@ package Midterm;
 
 public class Main {
     public static void main(String[] args) {
+
+        LibraryFile lFile=new LibraryFile();
         InputProcessing inputProcessing=new InputProcessing();
-        Library library = new Library("beheshti",inputProcessing);
         Manager manager=new Manager("ali","ahmadi","high school");
-        Menu menu = new Menu(library,inputProcessing);
+        Menu menu = new Menu(lFile.loadLibraryFromFile(inputProcessing),inputProcessing,lFile);
         menu.startMenu();
     }
 

@@ -1,6 +1,8 @@
 package Midterm;
 
-public class Manager {
+import java.io.Serializable;
+
+public class Manager implements Serializable {
     private String firstName;
     private String lastName;
     private String educationLevel;

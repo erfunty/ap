@@ -1,6 +1,8 @@
 package Midterm;
 
-public class Librarian {
+import java.io.Serializable;
+
+public class Librarian implements Serializable {
     private String firstName;
     private String lastName;
     private String employeeID;

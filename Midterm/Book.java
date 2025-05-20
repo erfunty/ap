@@ -1,6 +1,8 @@
 package Midterm;
 
-public class Book {
+import java.io.Serializable;
+
+public class Book implements Serializable {
     private String title;
     private String author;
     private int pageCount;

@@ -1,12 +1,15 @@
 package Midterm;
 
 
-public class Menu {
+
+public class Menu  {
     private InputProcessing inputMenu;
     private Library libraryMenu;
-    public Menu(Library library,InputProcessing inputProcessing){
+    private LibraryFile lFile;
+    public Menu(Library library,InputProcessing inputProcessing,LibraryFile libraryFile){
         this.inputMenu=inputProcessing;
         this.libraryMenu=library;
+        this.lFile=libraryFile;
     }
 
 
@@ -22,6 +25,7 @@ public class Menu {
                 case "2": managerMenu();break;
                 case "3": librarianMenu();break;
                 case "q":
+                    lFile.saveLibraryToFile(libraryMenu);
                     System.out.println("Exiting...");break;
                 default:
                     System.out.println("Invalid input, try again.");
@@ -58,7 +62,7 @@ public class Menu {
         }
         String choice;
         do {
-            System.out.println(" 1.Searching a book\n 2.borrow book request\n 3.show the list of student books");
+            System.out.println(" 1.Searching a book\n 2.borrow book request\n 3.show the list of student books\n 4.returning a book request");
             choice=inputMenu.gettingInput();
             switch (choice){
                 case "1":
@@ -66,6 +70,12 @@ public class Menu {
                     break;
                 case "2":
                     libraryMenu.borrowingBookRequest(ID);
+                    break;
+                case "3":
+                    libraryMenu.showStudentBooks(ID);
+                    break;
+                case "4":
+                    libraryMenu.returningBookRequest(ID);
                     break;
                 default:
                     System.out.println("Invalid input, try again.");
@@ -83,6 +93,7 @@ public class Menu {
             switch (choice){
                 case "1":
                     libraryMenu.addLibrarian();
+                    break;
                 default:
                     System.out.println("Invalid input, try again.");
 
@@ -97,7 +108,7 @@ public class Menu {
         }
         String choice;
         do {
-            System.out.println(" 1.Editing personal information\n 2.add book\n 3.checking requests");
+            System.out.println(" 1.Editing personal information\n 2.add book\n 3.checking requests \n 4.checking return request");
 
             choice=inputMenu.gettingInput();
             switch (choice){
@@ -110,7 +121,9 @@ public class Menu {
                 case  "3":
                     libraryMenu.checkingRequests(ID);
                     break;
-
+                case "4":
+                    libraryMenu.checkingReturnRequests(ID);
+                    break;
 
                 default:
                     System.out.println("Invalid input, try again.");
