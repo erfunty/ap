@@ -153,8 +153,9 @@ public class Library implements Serializable {
     }
     public void showStudentBooksBorrowed(String ID){
         for (int i = 0; i <borrowsList.size() ; i++) {
-            if (borrowsList.get(i).getStudentBorrowing().getStudentNumber().equals(ID)&& borrowsList.get(i).getReceivingLibrarian()!=null){
-                System.out.println(i+1+"."+borrowsList.get(i).getBorrowedBook());
+            if (borrowsList.get(i).getStudentBorrowing().getStudentNumber().equals(ID)
+                    && borrowsList.get(i).getReceivingLibrarian() == null) {
+                System.out.println(i + 1 + "." + borrowsList.get(i).getBorrowedBook());
             }
         }
     }

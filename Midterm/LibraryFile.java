@@ -22,7 +22,6 @@ public class LibraryFile implements Serializable{
              ObjectInputStream ois = new ObjectInputStream(fis)) {
             library = (Library) ois.readObject();
             library.setInputLibrary(input);
-
             System.out.println("Library loaded successfully from " + filePath);
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error loading library: " + e.getMessage());
