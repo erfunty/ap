@@ -66,8 +66,8 @@ public class StudentManager {
         if (!file.exists()) {
             return;
         }
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(studentFPath))) {
-            students = (List<Student>) ois.readObject();
+        try (ObjectInputStream readerStu = new ObjectInputStream(new FileInputStream(studentFPath))) {
+            students = (List<Student>) readerStu.readObject();
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error loading students: " + e.getMessage());
         }

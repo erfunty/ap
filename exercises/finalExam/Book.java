@@ -1,18 +1,24 @@
 package exercises.finalExam;
 
+import javax.xml.crypto.Data;
 import java.io.Serializable;
+import java.util.Date;
 
 public class Book implements Serializable {
     private String title;
     private String author;
     private int publishYear;
     private boolean isAvailable;
+    private Date borrowStartDate;
+    private Date borrowEndDate;
 
     public Book(String title, String author, int publishYear, boolean isAvailable) {
         this.title = title;
         this.author = author;
         this.publishYear = publishYear;
         this.isAvailable = isAvailable;
+        this.borrowStartDate=null;
+        this.borrowEndDate=null;
     }
 
 
@@ -30,6 +36,21 @@ public class Book implements Serializable {
 
     public boolean isAvailable() {
         return isAvailable;
+    }
+    public void setAvailable(boolean available){
+        this.isAvailable=available;
+    }
+    public Date getBorrowStartDate(){
+        return borrowStartDate;
+    }
+    public void setBorrowStartDate(Date borrowStartDate){
+        this.borrowStartDate= borrowStartDate;
+    }
+    public Date getBorrowEndDate(){
+        return borrowStartDate;
+    }
+    public void setborrowEndDate(Date borrowStartDate){
+        this.borrowStartDate= borrowStartDate;
     }
 
     @Override

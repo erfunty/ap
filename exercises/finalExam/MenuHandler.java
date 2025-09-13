@@ -1,7 +1,9 @@
 package exercises.finalExam;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+
 
 public class MenuHandler {
     private Scanner scanner;
@@ -109,10 +111,10 @@ public class MenuHandler {
                     librarySystem.editStudentInformation(currentUser);
                     break;
                 case 3:
-                    librarySystem.borrowBook(currentUser);
+                    handleBorrowBook(currentUser);
+
                     break;
                 case 4:
-                    librarySystem.returnBook(currentUser);
                     break;
                 case 5:
                     librarySystem.displayAvailableBooks();
@@ -157,6 +159,13 @@ public class MenuHandler {
             }
         }
     }
+    private void handleBorrowBook(Student currentUser) {
+        System.out.println("\n--- Borrow a Book ---");
+        System.out.print("Enter the title of the book to borrow: ");
+        String title = scanner.nextLine();
+        librarySystem.borrowBook(currentUser, title);
+    }
+
 
     private int getIntInput(int min, int max) {
         while (true) {
