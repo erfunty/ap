@@ -7,14 +7,18 @@ import java.util.Date;
 import java.util.List;
 
 public class LibrarySystem {
+    private SystemManager systemManager;
     private StudentManager studentManager;
     private MenuHandler menuHandler;
+    private List<Librarian> librarians;
     private List<Book> bookList;
     private List<BorrowRequest> borrowRequestList;
 
     public LibrarySystem() {
+        this.systemManager=new SystemManager();
         this.studentManager = new StudentManager();
         this.menuHandler = new MenuHandler(this);
+        this.librarians=new ArrayList<>();
         this.bookList=new ArrayList<>();
         this.borrowRequestList=new ArrayList<>();
         loadBook();
@@ -49,7 +53,7 @@ public class LibrarySystem {
         }
 
         if (bookToBorrow.isAvailable()) {
-            BorrowRequest newRequest = new BorrowRequest(currentUser, bookToBorrow, new Date(), null);
+            BorrowRequest newRequest = new BorrowRequest(currentUser, bookToBorrow, new Date());
             borrowRequestList.add(newRequest);
             System.out.println("Borrow request added successfully.");
         } else {
@@ -112,6 +116,24 @@ public class LibrarySystem {
             System.out.println("Error saving books: " + e.getMessage());
         }
     }
+    public void addLibrarian(String name, String username, String password) {
+        Librarian newLibrarian = new Librarian(name, username, password);
+        librarians.add(newLibrarian);
+        System.out.println("Librarian added successfully: " + name);
+    }
+
+    public Librarian authenticateLibrarian(String username, String password) {
+        for (Librarian librarian : librarians) {
+            if (librarian.getUsername().equals(username) && librarian.getPassword().equals(password)) {
+                return librarian;
+            }
+        }
+        return null;
+    }
+    public List<Librarian> getLibrarians(){
+        return librarians;
+    }
+
 
 
     private void loadBook() {

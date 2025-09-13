@@ -5,14 +5,13 @@ public class BorrowRequest {
     private Book book;
     private Date requestDate;
     private Date startDate;
-    private Date endDate;
     private boolean isApproved;
 
-    public BorrowRequest(Student student, Book book, Date startDate, Date endDate) {
+    public BorrowRequest(Student student, Book book, Date startDate) {
         this.student = student;
         this.book = book;
         this.startDate = startDate;
-        this.endDate = endDate;
+
         this.requestDate = new Date();
         this.isApproved = false;
     }
@@ -34,9 +33,6 @@ public class BorrowRequest {
         return startDate;
     }
 
-    public Date getEndDate() {
-        return endDate;
-    }
     public void setBorrowStartDate(Date startDate){
         this.startDate=startDate;
     }
