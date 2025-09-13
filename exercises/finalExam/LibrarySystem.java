@@ -130,6 +130,20 @@ public class LibrarySystem {
         }
         return null;
     }
+    public Librarian findLibrarianByUsername(String username) {
+        for (Librarian l : librarians) {
+            if (l.getUsername().equals(username)) return l;
+        }
+        return null;
+    }
+    public boolean changeLibrarianPassword(String username, String newPassword) {
+        Librarian l = findLibrarianByUsername(username);
+        if (l != null) {
+            l.setPassword(newPassword);
+            return true;
+        }
+        return false;
+    }
     public List<Librarian> getLibrarians(){
         return librarians;
     }

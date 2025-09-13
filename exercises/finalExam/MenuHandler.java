@@ -1,6 +1,5 @@
 package exercises.finalExam;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -9,7 +8,7 @@ public class MenuHandler {
     private Scanner scanner;
     private LibrarySystem librarySystem;
     private Student currentUser;
-    private Librarian currentlib;
+    private Librarian currenLibrarian;
 
     public MenuHandler(LibrarySystem librarySystem) {
         this.scanner = new Scanner(System.in);
@@ -24,11 +23,11 @@ public class MenuHandler {
             System.out.println("2. Student Login");
             System.out.println("3. View Registered Student Count");
             System.out.println("4. Librarian Login");
-            System.out.println("5. admin login");
-            System.out.println(". Exit");
+            System.out.println("5. admin menu");
+            System.out.println("6. Exit");
             System.out.print("Please enter your choice: ");
 
-            int choice = getIntInput(1, 7);
+            int choice = getIntInput(1, 6);
 
             switch (choice) {
                 case 1:
@@ -42,8 +41,10 @@ public class MenuHandler {
                     break;
                 case 4:
                     handleLibrarianLogin();
+                    break;
                 case 5:
                     displayAdminMenu();
+                    break;
                 case 6:
                     System.out.println("Exiting system. Goodbye!");
                     return;
@@ -87,7 +88,6 @@ public class MenuHandler {
         String password = scanner.nextLine();
 
         currentUser = librarySystem.authenticateStudent(username, password);
-
         if (currentUser != null) {
             System.out.println("Login successful! Welcome, " + currentUser.getName());
             displayLoggedInStudentMenu();
@@ -119,7 +119,6 @@ public class MenuHandler {
                     break;
                 case 3:
                     handleBorrowBook(currentUser);
-
                     break;
                 case 4:
                     break;
@@ -172,24 +171,6 @@ public class MenuHandler {
         String title = scanner.nextLine();
         librarySystem.borrowBook(currentUser, title);
     }
-    private void handleLibrarianLogin() {
-        System.out.println("\n=== Librarian Dashboard ===");
-
-        System.out.print("Username: ");
-        String username = scanner.nextLine();
-
-        System.out.print("Password: ");
-        String password = scanner.nextLine();
-
-        currentlib = librarySystem.authenticateLibrarian(username, password);
-
-        if (currentlib != null) {
-            System.out.println("Login successful! Welcome, " + currentlib.getName());
-            displayLibrarianMenu(currentlib);
-        } else {
-            System.out.println("Invalid username or password. Please try again.");
-        }
-    }
     private void displayLibrarianMenu(Librarian librarian) {
         while (true) {
             System.out.println("\n=== Librarian Dashboard ===");
@@ -211,12 +192,31 @@ public class MenuHandler {
             }
         }
     }
+    private void handleLibrarianLogin() {
+        System.out.println("\n=== Librarian Dashboard ===");
+
+        System.out.print("Username: ");
+        String username = scanner.nextLine();
+
+        System.out.print("Password: ");
+        String password = scanner.nextLine();
+
+        currenLibrarian = librarySystem.authenticateLibrarian(username, password);
+        if (currenLibrarian != null) {
+            System.out.println("Login successful! Welcome, " + currenLibrarian.getName());
+            displayLibrarianMenu(currenLibrarian);
+        } else {
+            System.out.println("Invalid username or password. Please try again.");
+        }
+    }
+
     private void handleChangePassword() {
         System.out.println("\n--- Change Password ---");
         System.out.print("Enter new password: ");
         String newPassword = scanner.nextLine();
 
-        currentlib.setPassword(newPassword);
+        currenLibrarian.setPassword(newPassword);
+        librarySystem.changeLibrarianPassword(currenLibrarian.getUsername(),newPassword);
     }
     private void displayAdminMenu() {
         while (true) {
