@@ -109,6 +109,31 @@ public class LibrarySystem {
         }
         return results;
     }
+    public void editBook(String title, String newTitle, String newAuthor, int newPublishYear, boolean newAvailability) {
+        for (int i = 0; i < bookList.size(); i++) {
+            Book book = bookList.get(i);
+
+            if (book.getTitle().equalsIgnoreCase(title)) {
+
+                if (newTitle != null && !newTitle.isEmpty()) {
+                    book.setTitle(newTitle);
+                }
+                if (newAuthor != null && !newAuthor.isEmpty()) {
+                    book.setAuthor(newAuthor);
+                }
+                if (newPublishYear != 0) {
+                    book.setPublishYear(newPublishYear);
+                }
+                book.setAvailable(newAvailability);
+
+
+                System.out.println("Book information updated successfully in memory!");
+                return;
+            }
+        }
+
+        System.out.println("Book with title \"" + title + "\" not found.");
+    }
     private void saveBooks() {
         try (ObjectOutputStream bookWriter = new ObjectOutputStream(new FileOutputStream("books.dat"))) {
             bookWriter.writeObject(bookList);

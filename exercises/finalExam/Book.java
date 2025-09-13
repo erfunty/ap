@@ -52,6 +52,15 @@ public class Book implements Serializable {
     public void setborrowEndDate(Date borrowStartDate){
         this.borrowStartDate= borrowStartDate;
     }
+    public void setTitle(String newTitle) {
+        this.title=newTitle;
+    }
+    public void setAuthor(String newAuthor) {
+        this.author=newAuthor;
+    }
+    public void setPublishYear(int newPublishYear) {
+        this.publishYear=newPublishYear;
+    }
 
     @Override
     public String toString() {
@@ -60,5 +69,6 @@ public class Book implements Serializable {
                 " | Year: " + publishYear +
                 " | Available: " + (isAvailable ? "Yes" : "No");
     }
+
 
 }

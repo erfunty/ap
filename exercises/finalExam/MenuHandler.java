@@ -176,10 +176,11 @@ public class MenuHandler {
             System.out.println("\n=== Librarian Dashboard ===");
             System.out.println("1. Change My Password");
             System.out.println("2. Add new book");
-            System.out.println("3. Logout");
+            System.out.println("3. Edit book information");
+            System.out.println("4. Logout");
             System.out.print("Please enter your choice: ");
 
-            int choice = getIntInput(1,3);
+            int choice = getIntInput(1,4);
 
             switch (choice) {
                 case 1:
@@ -187,8 +188,12 @@ public class MenuHandler {
                     break;
                 case 2:
                     handleAddBook();
+                    break;
                 case 3:
+                    handleEditBook();
+                case 4:
                     System.out.println("Logged out successfully.");
+                    currenLibrarian=null;
                     return;
                 default:
                     System.out.println("Invalid option! Please try again.");
@@ -235,6 +240,39 @@ public class MenuHandler {
 
         librarySystem.addBook(title, author, publishYear, isAvailable);
         System.out.println("Book added successfully!");
+    }
+    private void handleEditBook() {
+        System.out.println("\n--- Edit Book Information ---");
+
+
+        System.out.print("Enter the title of the book to edit: ");
+        String title = scanner.nextLine();
+
+        System.out.print("Enter new title (leave blank to keep current): ");
+        String newTitle = scanner.nextLine();
+
+        System.out.print("Enter new author (leave blank to keep current): ");
+        String newAuthor = scanner.nextLine();
+
+        System.out.print("Enter new publish year (leave blank to keep current): ");
+        String yearInput = scanner.nextLine();
+        int newPublishYear = 0;
+        if (!yearInput.isEmpty()) {
+            try {
+                newPublishYear = Integer.parseInt(yearInput);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid year input. Keeping the current year.");
+            }
+        }
+
+        System.out.print("Enter new availability status (true/false, leave blank to keep current): ");
+        String availabilityInput = scanner.nextLine();
+        boolean newAvailability = false;
+        if (!availabilityInput.isEmpty()) {
+            newAvailability = Boolean.parseBoolean(availabilityInput);
+        }
+
+        librarySystem.editBook(title, newTitle, newAuthor, newPublishYear, newAvailability);
     }
     private void displayAdminMenu() {
         while (true) {
