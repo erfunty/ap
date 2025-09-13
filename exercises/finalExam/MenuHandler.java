@@ -1,5 +1,6 @@
 package exercises.finalExam;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class MenuHandler {
@@ -122,6 +123,37 @@ public class MenuHandler {
                     return;
                 default:
                     System.out.println("Invalid option! Please try again.");
+            }
+        }
+    }
+    private void handleBookSerch() {
+        System.out.println("\n--- Book Search ---");
+
+        System.out.print("Enter book title (leave blank for no search): ");
+        String title = scanner.nextLine();
+
+        System.out.print("Enter author name (leave blank for no search): ");
+        String author = scanner.nextLine();
+
+        System.out.print("Enter publish year (leave blank for no search): ");
+        Integer publishYear = null;
+        try {
+            String yearInput = scanner.nextLine();
+            if (!yearInput.isEmpty()) {
+                publishYear = Integer.parseInt(yearInput);
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid year. Continuing without year filter.");
+        }
+
+        List<Book> searchResults = librarySystem.searchBooks(title, author, publishYear);
+
+        if (searchResults.isEmpty()) {
+            System.out.println("No books found matching your criteria.");
+        } else {
+            System.out.println("\n--- Search Results ---");
+            for (Book book : searchResults) {
+                System.out.println(book);
             }
         }
     }
