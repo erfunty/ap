@@ -175,16 +175,19 @@ public class MenuHandler {
         while (true) {
             System.out.println("\n=== Librarian Dashboard ===");
             System.out.println("1. Change My Password");
-            System.out.println("2. Logout");
+            System.out.println("2. Add new book");
+            System.out.println("3. Logout");
             System.out.print("Please enter your choice: ");
 
-            int choice = getIntInput(1, 2);
+            int choice = getIntInput(1,3);
 
             switch (choice) {
                 case 1:
                     handleChangePassword();
                     break;
                 case 2:
+                    handleAddBook();
+                case 3:
                     System.out.println("Logged out successfully.");
                     return;
                 default:
@@ -209,7 +212,6 @@ public class MenuHandler {
             System.out.println("Invalid username or password. Please try again.");
         }
     }
-
     private void handleChangePassword() {
         System.out.println("\n--- Change Password ---");
         System.out.print("Enter new password: ");
@@ -217,6 +219,22 @@ public class MenuHandler {
 
         currenLibrarian.setPassword(newPassword);
         librarySystem.changeLibrarianPassword(currenLibrarian.getUsername(),newPassword);
+    }
+    private void handleAddBook() {
+        System.out.println("\n--- Add a New Book ---");
+        System.out.print("Enter book title: ");
+        String title = scanner.nextLine();
+
+        System.out.print("Enter book author: ");
+        String author = scanner.nextLine();
+        System.out.print("Enter book publish year: ");
+        int publishYear = scanner.nextInt();
+
+
+        boolean isAvailable = true;
+
+        librarySystem.addBook(title, author, publishYear, isAvailable);
+        System.out.println("Book added successfully!");
     }
     private void displayAdminMenu() {
         while (true) {
