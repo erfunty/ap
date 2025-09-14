@@ -40,6 +40,10 @@ public class BorrowRequest {
     public boolean isApproved() {
         return isApproved;
     }
+    public void setApproved(boolean approve){
+        this.isApproved=approve;
+    }
+
 
     public void approve() {
         this.isApproved = true;

@@ -1,6 +1,5 @@
 package exercises.finalExam;
 
-import javax.xml.crypto.Data;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -47,10 +46,10 @@ public class Book implements Serializable {
         this.borrowStartDate= borrowStartDate;
     }
     public Date getBorrowEndDate(){
-        return borrowStartDate;
+        return borrowEndDate;
     }
     public void setborrowEndDate(Date borrowStartDate){
-        this.borrowStartDate= borrowStartDate;
+        this.borrowEndDate= borrowEndDate;
     }
     public void setTitle(String newTitle) {
         this.title=newTitle;
@@ -71,4 +70,7 @@ public class Book implements Serializable {
     }
 
 
+    public void setReturnDate(Date returnDate) {
+        this.borrowEndDate=returnDate;
+    }
 }

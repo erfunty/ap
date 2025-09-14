@@ -24,10 +24,11 @@ public class MenuHandler {
             System.out.println("3. View Registered Student Count");
             System.out.println("4. Librarian Login");
             System.out.println("5. admin menu");
-            System.out.println("6. Exit");
+            System.out.println("6. gust menu");
+            System.out.println("7. Exit");
             System.out.print("Please enter your choice: ");
 
-            int choice = getIntInput(1, 6);
+            int choice = getIntInput(1, 7);
 
             switch (choice) {
                 case 1:
@@ -46,6 +47,8 @@ public class MenuHandler {
                     displayAdminMenu();
                     break;
                 case 6:
+                    displayGuestMenu();
+                case 7:
                     System.out.println("Exiting system. Goodbye!");
                     return;
                 default:
@@ -177,10 +180,14 @@ public class MenuHandler {
             System.out.println("1. Change My Password");
             System.out.println("2. Add new book");
             System.out.println("3. Edit book information");
-            System.out.println("4. Logout");
+            System.out.println("4. manage borrow request");
+            System.out.println("5. view student borrowing history");
+            System.out.println("6. Activate/deactivate student");
+            System.out.println("7. return a book");
+            System.out.println("8. Logout");
             System.out.print("Please enter your choice: ");
 
-            int choice = getIntInput(1,4);
+            int choice = getIntInput(1,8);
 
             switch (choice) {
                 case 1:
@@ -191,7 +198,20 @@ public class MenuHandler {
                     break;
                 case 3:
                     handleEditBook();
+                    break;
                 case 4:
+                    handleViewBorrowRequests();
+                    break;
+                case 5:
+                    handleBorrowingHistoryReport();
+                    break;
+                case 6:
+                    handleActivateDeactivateStudent();
+                    break;
+                case 7:
+                    handleReturnBook();
+                    break;
+                case 8:
                     System.out.println("Logged out successfully.");
                     currenLibrarian=null;
                     return;
@@ -274,6 +294,174 @@ public class MenuHandler {
 
         librarySystem.editBook(title, newTitle, newAuthor, newPublishYear, newAvailability);
     }
+    private void handleViewBorrowRequests() {
+        System.out.println("\n--- Borrow Requests ---");
+
+
+        if (librarySystem.getBorrowRequestList().isEmpty()) {
+            System.out.println("No borrow requests available.");
+            return;
+        }
+
+        for (int i = 0; i < librarySystem.getBorrowRequestList().size(); i++) {
+            BorrowRequest request = librarySystem.getBorrowRequestList().get(i);
+            System.out.println((i + 1) + ". " + request.getBook() + " | Requested by: " + request.getStudent().getName());
+        }
+
+
+        System.out.print("Enter the number of the borrow request to approve or reject (0 to cancel): ");
+        int choice = getIntInput(0, librarySystem.getBorrowRequestList().size());
+
+        if (choice == 0) {
+            System.out.println("Returning to the previous menu.");
+            return;
+        }
+
+
+        BorrowRequest request = librarySystem.getBorrowRequestList().get(choice - 1);
+
+        System.out.println("1. Approve request and start borrowing");
+        System.out.println("2. Reject request and remove");
+        System.out.print("Please enter your choice (1 or 2): ");
+
+        int actionChoice = getIntInput(1, 2);
+
+        if (actionChoice == 1) {
+            librarySystem.approveBorrowRequest(request);
+        } else if (actionChoice == 2) {
+            librarySystem.removeBorrowRequest(request);
+        }
+    }
+    private void handleBorrowingHistoryReport() {
+        System.out.print("\nEnter the student ID to view borrowing history: ");
+        String studentId = scanner.nextLine();
+
+        Student student = librarySystem.getStudentById(studentId);
+        if (student == null) {
+            System.out.println("Student not found.");
+            return;
+        }
+
+        BorrowingHistoryReport report = librarySystem.generateBorrowingHistoryReport(student);
+        System.out.println("\n--- Borrowing History Report for Student: " + student.getName() + " ---");
+        System.out.println("Total borrowings: " + report.getTotalBorrowings());
+        System.out.println("Total books not returned: " + report.getBooksNotReturned());
+        System.out.println("Total late returns: " + report.getLateReturns());
+    }
+    private void handleActivateDeactivateStudent() {
+        System.out.print("\nEnter the student ID to activate/deactivate: ");
+        String studentId = scanner.nextLine();
+
+        Student student = librarySystem.getStudentById(studentId);
+        if (student == null) {
+            System.out.println("Student not found.");
+            return;
+        }
+
+        System.out.println("Current status: " + (student.isActive() ? "Active" : "Inactive"));
+        System.out.print("Do you want to change the status? (1: Activate, 2: Deactivate): ");
+        int choice = getIntInput(1, 2);
+
+        if (choice == 1) {
+            student.setActive(true);
+            System.out.println("Student has been activated.");
+        } else if (choice == 2) {
+            student.setActive(false);
+            System.out.println("Student has been deactivated.");
+        }
+    }
+    private void handleReturnBook() {
+        System.out.print("\nEnter the student ID to return a book: ");
+        String studentId = scanner.nextLine();
+
+        Student student = librarySystem.getStudentById(studentId);
+        if (student == null) {
+            System.out.println("Student not found.");
+            return;
+        }
+
+        System.out.print("\nEnter the title of the book to return: ");
+        String bookTitle = scanner.nextLine();
+
+        Book book = null;
+        for (Book borrowedBook : student.getBorrowedBooks()) {
+            if (borrowedBook.getTitle().equalsIgnoreCase(bookTitle)) {
+                book = borrowedBook;
+                break;
+            }
+        }
+
+        if (book != null) {
+            librarySystem.receiveBookFromStudent(student, book);
+        } else {
+            System.out.println("The student doesn't have this book.");
+        }
+    }
+    public void displayGuestMenu() {
+        while (true) {
+            System.out.println("\n=== Guest Menu ===");
+            System.out.println("1. View Registered Student Count");
+            System.out.println("2. Search Books by Title");
+            System.out.println("3. View Basic Statistics (Students, Books, Borrowed Books)");
+            System.out.println("4. Go Back");
+            System.out.print("Please enter your choice: ");
+
+            int choice = getIntInput(1, 4);
+
+            switch (choice) {
+                case 1:
+                    viewStudentCount();
+                    break;
+                case 2:
+                    searchBooksByTitle();
+                    break;
+                case 3:
+                    viewStatistics();
+                    break;
+                case 4:
+                    return;
+                default:
+                    System.out.println("Invalid option! Please try again.");
+            }
+        }
+    }
+    private void viewStudentCount() {
+        int studentCount = librarySystem.getStudentCount();
+        System.out.println("\nTotal registered students: " + studentCount);
+    }
+    private void searchBooksByTitle() {
+        System.out.println("\n--- Book Search by Title ---");
+        System.out.print("Enter book title: ");
+        String title = scanner.nextLine();
+
+        List<Book> searchResults = librarySystem.searchBooks(title, null, null);
+
+        if (searchResults.isEmpty()) {
+            System.out.println("No books found with the given title.");
+        } else {
+            System.out.println("\n--- Search Results ---");
+            for (Book book : searchResults) {
+                System.out.println(book);
+            }
+        }
+    }
+    private void viewStatistics() {
+        int studentCount = librarySystem.getStudentCount();
+        int bookCount = librarySystem.getBookList().size();
+        int totalBorrowedBooks = librarySystem.getTotalBorrowedBooks();
+
+        int lastBorrowedBookCount = librarySystem.getborrowr().size();
+
+        System.out.println("\n=== Library Statistics ===");
+        System.out.println("Total number of students: " + studentCount);
+        System.out.println("Total number of books: " + bookCount);
+        System.out.println("Total number of borrowed books: " + totalBorrowedBooks);
+        System.out.println("Number of last borrowed books: " + lastBorrowedBookCount);
+    }
+
+
+
+
     private void displayAdminMenu() {
         while (true) {
             System.out.println("\n=== Admin Dashboard ===");

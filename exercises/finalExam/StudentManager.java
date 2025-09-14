@@ -4,13 +4,11 @@ import java.io.*;
 import java.util.*;
 
 
-public class StudentManager {
+public class StudentManager implements Serializable{
     private List<Student> students;
-    private final String studentFPath="student.dat";
 
     public StudentManager() {
         this.students = new ArrayList<>();
-        loadStudents();
     }
 
     public void registerStudent(String name, String studentId, String username, String password) {
@@ -21,7 +19,6 @@ public class StudentManager {
 
         Student newStudent = new Student(name, studentId, username, password);
         students.add(newStudent);
-        saveStudent();
         System.out.println("Student registration completed successfully.");
     }
 
@@ -53,23 +50,9 @@ public class StudentManager {
     public int getStudentCount() {
         return students.size();
     }
-    private void saveStudent(){
-        try(ObjectOutputStream writerStu=new ObjectOutputStream(new FileOutputStream(studentFPath))) {
-           writerStu.writeObject(students); ;
-        } catch (IOException e){
-            System.out.println("Error saving student: "+e.getMessage());
-        }
 
-    }
-    private void loadStudents(){
-        File file=new File(studentFPath);
-        if (!file.exists()) {
-            return;
-        }
-        try (ObjectInputStream readerStu = new ObjectInputStream(new FileInputStream(studentFPath))) {
-            students = (List<Student>) readerStu.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error loading students: " + e.getMessage());
-        }
+
+    public List<Student> getStudents() {
+        return students;
     }
 }

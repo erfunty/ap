@@ -1,12 +1,12 @@
 package exercises.finalExam;
 
-import javax.xml.crypto.Data;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-public class LibrarySystem {
+public class LibrarySystem implements Serializable{
     private SystemManager systemManager;
     private StudentManager studentManager;
     private MenuHandler menuHandler;
@@ -21,7 +21,7 @@ public class LibrarySystem {
         this.librarians=new ArrayList<>();
         this.bookList=new ArrayList<>();
         this.borrowRequestList=new ArrayList<>();
-        loadBook();
+
     }
 
     public int getStudentCount() {
@@ -41,9 +41,9 @@ public class LibrarySystem {
     }
 
     public void borrowBook(Student currentUser, String title) {
-        if (currentUser == null) {
-            System.out.println("Please login first.");
-            return;
+        if (!currentUser.isActive()) {
+            System.out.println("This student is inactive and cannot borrow books.");
+            return ;
         }
 
         Book bookToBorrow = findBookByTitle(title);
@@ -134,13 +134,7 @@ public class LibrarySystem {
 
         System.out.println("Book with title \"" + title + "\" not found.");
     }
-    private void saveBooks() {
-        try (ObjectOutputStream bookWriter = new ObjectOutputStream(new FileOutputStream("books.dat"))) {
-            bookWriter.writeObject(bookList);
-        } catch (IOException e) {
-            System.out.println("Error saving books: " + e.getMessage());
-        }
-    }
+
     public void addLibrarian(String name, String username, String password) {
         Librarian newLibrarian = new Librarian(name, username, password);
         librarians.add(newLibrarian);
@@ -169,28 +163,118 @@ public class LibrarySystem {
         }
         return false;
     }
+    public List<BorrowRequest> getBorrowRequestList() {
+        return borrowRequestList;
+    }
+    public Student getStudentById(String studentId) {
+        for (Student student : studentManager.getStudents()) {
+            if (student.getStudentId().equals(studentId)) {
+                return student;
+            }
+        }
+        return null;
+    }
+    public void receiveBookFromStudent(Student student, Book book) {
+        if (student.getBorrowedBooks().contains(book)) {
+            student.removeBorrowedBook(book);
+            book.setReturnDate(new Date());
+            book.setAvailable(true);
+            System.out.println("Book received from student and return date recorded.");
+        } else {
+            System.out.println("The student doesn't have this book borrowed.");
+        }
+    }
+
+    public BorrowingHistoryReport generateBorrowingHistoryReport(Student student) {
+        int totalBorrowings = 0;
+        int booksNotReturned = 0;
+        int lateReturns = 0;
+
+        for (Book book : student.getBorrowedBooks()) {
+            totalBorrowings++;
+
+
+            long sevenDaysInMillis = 7 * 24 * 60 * 60 * 1000L;
+            if (book.getBorrowEndDate() == null) {
+                booksNotReturned++;
+            } else if (book.getBorrowEndDate().getTime() > book.getBorrowStartDate().getTime() + sevenDaysInMillis) {
+                lateReturns++;
+            }
+        }
+
+        return new BorrowingHistoryReport(totalBorrowings, booksNotReturned, lateReturns);
+    }
+    public int getTotalBorrowedBooks() {
+        int totalBorrowedBooks = 0;
+        for (BorrowRequest request : borrowRequestList) {
+            if (request.isApproved()) {
+                totalBorrowedBooks++;
+            }
+        }
+        return totalBorrowedBooks;
+    }
+
+
+    public void approveBorrowRequest(BorrowRequest request) {
+        if (request.getBook().isAvailable()) {
+            request.getBook().setAvailable(false);
+            request.setApproved(true);
+            request.getStudent().addBorrowedBook(request.getBook());
+            System.out.println("Borrowing started for book: " + request.getBook().getTitle());
+
+
+            request.setBorrowStartDate(new Date());
+
+
+            borrowRequestList.remove(request);
+        } else {
+            System.out.println("The book is not available for borrowing.");
+        }
+    }
+
+    public void removeBorrowRequest(BorrowRequest request) {
+        borrowRequestList.remove(request);
+        System.out.println("Request has been rejected and removed.");
+    }
     public List<Librarian> getLibrarians(){
         return librarians;
     }
 
 
 
-    private void loadBook() {
-        File file = new File("books.dat");
-        if (!file.exists()) return;
 
-        try (ObjectInputStream bookReader = new ObjectInputStream(new FileInputStream(file))) {
-            bookList = (List<Book>) bookReader.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error loading books: " + e.getMessage());
-        }
-    }
 
 
     public void displayAvailableBooks() {
         System.out.println("\n--- Available Books ---");
         for (Book book : bookList) {
             System.out.println(book);
+        }
+    }
+    private void loadData() {
+        File file = new File("librarySystem.dat");
+        if (!file.exists()) {
+            System.out.println("No saved data found. Starting with a fresh system.");
+            return;
+        }
+
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
+            LibrarySystem savedSystem = (LibrarySystem) in.readObject();
+            this.bookList = savedSystem.bookList;
+            this.studentManager = savedSystem.studentManager;
+            this.librarians = savedSystem.librarians;
+            this.borrowRequestList = savedSystem.borrowRequestList;
+            System.out.println("System data loaded successfully.");
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error loading system data: " + e.getMessage());
+        }
+    }
+    public void saveData() {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("librarySystem.dat"))) {
+            out.writeObject(this);
+            System.out.println("System data saved successfully.");
+        } catch (IOException e) {
+            System.out.println("Error saving system data: " + e.getMessage());
         }
     }
 
@@ -200,6 +284,15 @@ public class LibrarySystem {
 
     public static void main(String[] args) {
         LibrarySystem system = new LibrarySystem();
+        system.loadData();
         system.start();
+        system.saveData();
+    }
+
+    public List<Book> getBookList() {
+        return bookList;
+    }
+    public List<BorrowRequest> getborrowr(){
+        return borrowRequestList;
     }
 }
